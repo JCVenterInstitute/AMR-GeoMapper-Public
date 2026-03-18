@@ -1,0 +1,4 @@
+id,family,genus,species,country,collection_date,gene,drug_class,evidence,resistance_mechanism,gene_short_name,gene_family_name
+sample1,Enterobacteriaceae,Escherichia,E. coli,Nigeria,2020-01-15,geneA,penicillin,CARD,antibiotic inactivation,GeneA,FamilyX
+sample1,Enterobacteriaceae,Escherichia,E. coli,Nigeria,2020-01-15,geneB,cephalosporin,argannot,antibiotic efflux,GeneB,FamilyY
+sample2,Enterobacteriaceae,Klebsiella,K. pneumoniae,Kenya,2021-03-22,geneC,carbapenem,CARD,antibiotic target alteration,GeneC,FamilyZ

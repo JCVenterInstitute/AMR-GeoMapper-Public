@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <script type="module" src="dist/agm.min.js"></script>
+    <!-- <script type="module" src="components/AMRGeoMapper.js"></script> -->
+    <!-- <script type="module" src="components/userFileHandler.js"></script> -->
+
+    <title>AMR GeoMapper</title>
+  </head>
+  <body>
+    <div style="height: 100vh; width: 100%">
+      <amr-geo-mapper
+        config-url="http://localhost:3000/config/demo/config-ecoli-obs.json"
+        taxonomy-info="http://localhost:3000/config/demo/taxon-ecoli-obs.json"
+      ></amr-geo-mapper>
+    </div>
+  </body>
+</html>

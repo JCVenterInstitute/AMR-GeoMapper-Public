@@ -1,0 +1,194 @@
+{
+  "linkedFields": {
+    "fields": [
+      "gene",
+      "evidence",
+      "property",
+      "antibiotic_resistant",
+      "antibiotic_susceptible",
+      "antibiotic_unspecified"
+    ],
+    "primaryKey": "gene"
+  },
+  "dataAPI": {
+    "url": "http://localhost:3000/data",
+    "dataFile": "data/demo/bvbrcEcoli_obs.jsonl"
+  },
+  "mapOptions": {
+    "tileProvider": {
+      "url": "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>",
+      "maxZoom": 19
+    },
+    "initialLocation": {
+      "lat": 20,
+      "lng": 0,
+      "zoom": 2
+    },
+    "showMarkerPieCharts": true,
+    "markerPieChartSize": {
+      "min": 60,
+      "max": 120
+    },
+    "countryShading": {
+      "enabled": true,
+      "valueMode": "perCapita",
+      "colorGradient": [
+        "#ffffcc",
+        "#c7e9b4",
+        "#7fcdbb",
+        "#41b6c4",
+        "#2c7fb8",
+        "#253494"
+      ],
+      "noDataColor": "#f0f0f0",
+      "fillOpacity": 0.6,
+      "borderColor": "#cbcbcb",
+      "borderWeight": 1,
+      "showTooltip": false
+    }
+  },
+  "filters": [
+    {
+      "column": "collection_year",
+      "alias": "Date",
+      "specialType": "date",
+      "searchable": false,
+      "arrayType": false,
+      "hasDropdown": true,
+      "hasBarChart": false,
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#F9C74F"]
+      }
+    },
+    {
+      "column": "antibiotic_resistant",
+      "alias": "Resistant",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": ["species", "antibiotic_susceptible", "evidence"]
+      },
+      "onPieChart": true,
+      "chartColors": {
+        "general": ["#F94144"],
+        "pie": ["#F9A61A", "#B2134C", "#00B30D", "#0032B3", "#1F5E24"]
+      }
+    },
+    {
+      "column": "antibiotic_susceptible",
+      "alias": "Susceptible",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": ["species", "antibiotic_resistant", "evidence"]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#90BE6D"]
+      }
+    },
+    {
+      "column": "antibiotic_unspecified",
+      "alias": "Unspecified",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": ["species", "antibiotic_resistant", "evidence"]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#577590"]
+      }
+    },
+    {
+      "column": "evidence",
+      "alias": "Evidence",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": [
+          "species",
+          "antibiotic_resistant",
+          "antibiotic_susceptible"
+        ]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#F3722C"]
+      }
+    },
+    {
+      "column": "species",
+      "alias": "Species",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": false,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": [
+          "antibiotic_resistant",
+          "antibiotic_susceptible",
+          "evidence"
+        ]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#90BE6D"]
+      }
+    },
+    {
+      "column": "property",
+      "alias": "Property",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": ["species", "antibiotic_resistant", "evidence"]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#6C3A5C"]
+      }
+    },
+    {
+      "column": "gene",
+      "alias": "Gene",
+      "specialType": null,
+      "searchable": true,
+      "arrayType": true,
+      "hasDropdown": true,
+      "hasBarChart": true,
+      "chartType": ["stackedBar", "lineGraph", "stackedArea"],
+      "hierarchicalOptions": {
+        "secondaryDimensions": ["species", "antibiotic_resistant", "evidence"]
+      },
+      "onPieChart": false,
+      "chartColors": {
+        "general": ["#E5C3D1"]
+      }
+    }
+  ]
+}
