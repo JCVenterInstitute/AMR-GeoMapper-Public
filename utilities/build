@@ -1,0 +1,2 @@
+#!/bin/bash
+rollup -c

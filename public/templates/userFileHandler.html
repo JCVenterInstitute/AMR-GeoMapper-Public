@@ -1,0 +1,68 @@
+<div id="main-button-group">
+  <div class="flex-row align-center">
+    <div id="state-open" class="main-content">
+      <div class="flex-row open-row">
+        <div class="open-input-group">
+          <label class="button" for="fileInput" id="uploadLabel">Load Custom Data</label>
+          <input class="hidden" name="fileInput" id="fileInput" type="file" accept=".csv,text/csv" />
+        </div>
+        <div class="open-input-group">
+          <a id="template-download">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#1f1f1f"
+            >
+              <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+            </svg>
+            Download Template
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="state-uploading" class="hidden main-content">
+      <div class="progress-container">
+        <div class="progress-info">
+          <span id="progress-status">Processing...</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-text" id="progress-details">Reading file...</div>
+      </div>
+    </div>
+  </div>
+  <div id="loaded-files"></div>
+</div>
+<div id="amrwatch-modal" class="amrwatch-modal amrwatch-hidden" role="dialog" aria-modal="true" aria-labelledby="amrwatch-title">
+  <div class="amrwatch-dialog">
+    <div class="amrwatch-header">
+      <p id="amrwatch-title" class="amrwatch-title">AMR.watch file detected</p>
+      <button class="button" id="amrwatch-close" type="button">✕</button>
+    </div>
+    <div class="hint">
+      You can provide a species name to skip accession lookups (faster for large files).
+    </div>
+    <label for="amrwatch-species-input">Species name (optional)</label>
+    <input
+      id="amrwatch-species-input"
+      class="amrwatch-input"
+      type="text"
+      placeholder="Escherichia coli"
+    />
+    <div class="amrwatch-actions">
+      <button class="button" id="amrwatch-use-lookup" type="button">Use accession lookup</button>
+      <button class="button" id="amrwatch-use-species" type="button">Use species name</button>
+    </div>
+  </div>
+</div>
+
+<template id="snitchTemplate">
+  <div id="file-snitch">
+    <button class="button" id="clearFileBtn">✕</button>
+    <p id="filename">?</p>
+  </div>
+</template>
