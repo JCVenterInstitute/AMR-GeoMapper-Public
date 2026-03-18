@@ -15,7 +15,7 @@ This guide walks through running AMR GeoMapper on your local machine using the i
 
 ```bash
 git clone <repository-url>
-cd mGO
+cd AMR-Geo-Mapper
 npm install
 ```
 
@@ -37,11 +37,11 @@ You can change the port by editing this file. It defaults to `3000` if not speci
 
 The repository includes a demo dataset so you can start exploring right away. The demo files are:
 
-| File | Path | Description |
-| --- | --- | --- |
-| Data file | `public/data/demo/bvbrcEcoli_obs.jsonl` | Sample JSONL dataset of *E. coli* genomes from BV-BRC |
+| File          | Path                                       | Description                                                             |
+| ------------- | ------------------------------------------ | ----------------------------------------------------------------------- |
+| Data file     | `public/data/demo/bvbrcEcoli_obs.jsonl`    | Sample JSONL dataset of _E. coli_ genomes from BV-BRC                   |
 | Configuration | `public/config/demo/config-ecoli-obs.json` | Config file that defines filters, chart options, and the data file path |
-| Taxonomy tree | `public/config/demo/taxon-ecoli-obs.json` | Taxonomy hierarchy for the species selection modal |
+| Taxonomy tree | `public/config/demo/taxon-ecoli-obs.json`  | Taxonomy hierarchy for the species selection modal                      |
 
 The JSONL data file contains one JSON object per line, where each object represents a genome record. Each record contains scalar metadata (country, species, etc.) and an `observations` array of gene observation objects. See the [Data API Reference](data-api.md) for the record schema.
 
@@ -59,9 +59,9 @@ AMR GeoMapper uses Rollup to bundle all ES modules into a single file. Run the b
 
 This produces two files:
 
-| Output | Description |
-| --- | --- |
-| `public/dist/agm.js` | Unminified ES module bundle |
+| Output                   | Description                                    |
+| ------------------------ | ---------------------------------------------- |
+| `public/dist/agm.js`     | Unminified ES module bundle                    |
 | `public/dist/agm.min.js` | Minified ES module bundle (used in production) |
 
 The entry point for the bundle is `public/entry.js`, which imports the `<amr-geo-mapper>` and `<csv-upload-button>` web components.
