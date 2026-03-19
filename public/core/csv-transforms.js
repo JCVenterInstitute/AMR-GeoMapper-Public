@@ -200,7 +200,7 @@ export function parseListField(raw, sep, inferElems) {
 // ---------- Row transform ----------
 export function transformRow(
   rowObj,
-  { inferTypes, listCols, listSep, inferListElems, keepHeaders }
+  { inferTypes, listCols, listSep, inferListElems, keepHeaders },
 ) {
   const out = {};
   const useAll = !keepHeaders || keepHeaders.length === 0;
@@ -276,14 +276,17 @@ export function extractFlatObservation(rowObj, linkedFieldsSet, inferTypes) {
  * @param {Function} options.progressCb - Progress callback
  * @returns {{ jsonlRows: string[], validation: Object|null }}
  */
-export function groupFlatRowsToJsonl(rows, {
-  idColumn = "id",
-  linkedFields = [],
-  inferTypes = false,
-  schema = null,
-  maxErrors = 200,
-  progressCb = () => {},
-}) {
+export function groupFlatRowsToJsonl(
+  rows,
+  {
+    idColumn = "id",
+    linkedFields = [],
+    inferTypes = false,
+    schema = null,
+    maxErrors = 200,
+    progressCb = () => {},
+  },
+) {
   const linkedFieldsSet = new Set(linkedFields);
   const groups = new Map(); // idValue → { scalar, observations[] }
   const groupOrder = []; // preserve insertion order of IDs
@@ -292,7 +295,11 @@ export function groupFlatRowsToJsonl(rows, {
 
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-    const { scalar, observation } = extractFlatObservation(row, linkedFieldsSet, inferTypes);
+    const { scalar, observation } = extractFlatObservation(
+      row,
+      linkedFieldsSet,
+      inferTypes,
+    );
     const id = scalar[idColumn] ?? "";
     const key = String(id);
 
@@ -332,7 +339,10 @@ export function groupFlatRowsToJsonl(rows, {
 
     if (schema) {
       const { errors, warnings } = validateRowAgainstSchema(
-        record, i + 2, schema, uniqueSets,
+        record,
+        i + 2,
+        schema,
+        uniqueSets,
       );
       if (errors.length) allErrors.push(...errors);
       if (warnings.length) allWarnings.push(...warnings);
@@ -361,10 +371,21 @@ export function groupFlatRowsToJsonl(rows, {
 /**
  * Build a fatal result object for early termination errors.
  */
-export function buildFatalResult(delimiter, headers, code, msg, missingHeaders = []) {
+export function buildFatalResult(
+  delimiter,
+  headers,
+  code,
+  msg,
+  missingHeaders = [],
+) {
   const errorCount = missingHeaders.length || 1;
   const errors = missingHeaders.length
-    ? missingHeaders.map((h) => ({ row: 1, column: h, code, msg: "Header missing" }))
+    ? missingHeaders.map((h) => ({
+        row: 1,
+        column: h,
+        code,
+        msg: "Header missing",
+      }))
     : [{ row: 1, column: "", code, msg }];
 
   return {
@@ -407,7 +428,7 @@ export function extractLines(buffer) {
 export function buildAmrWatchRowMapper(
   speciesMap,
   availableDrugCols = null,
-  speciesOverride = null
+  speciesOverride = null,
 ) {
   const drugCols = AMR_WATCH_HEADERS.drugCols;
   const activeDrugCols = Array.isArray(availableDrugCols)
@@ -441,9 +462,8 @@ export function buildAmrWatchRowMapper(
           .filter(Boolean);
         for (const gene of genes) {
           observations.push({
-            drug_class: label,
+            antibiotic_resistant: label,
             gene: gene,
-            gene_short_name: gene,
           });
         }
       }
@@ -475,7 +495,7 @@ export function csvFlatTextToJsonl(
     progressCb = () => {},
     schema = null,
     maxErrors = 200,
-  }
+  },
 ) {
   const sample = text.slice(0, sniffBytes);
   const delim = delimiter || sniffDelimiter(sample, ",");
@@ -490,7 +510,13 @@ export function csvFlatTextToJsonl(
   if (schema && schema.requireHeaders?.length) {
     const hres = validateHeaders(headers, schema.requireHeaders);
     if (!hres.ok) {
-      return buildFatalResult(delim, headers, "missing_header", "Header missing", hres.missing);
+      return buildFatalResult(
+        delim,
+        headers,
+        "missing_header",
+        "Header missing",
+        hres.missing,
+      );
     }
   }
 
@@ -517,11 +543,18 @@ export function csvFlatTextToJsonl(
     progressCb,
   });
 
-  const jsonl = jsonlRows.map((r) =>
-    pretty ? JSON.stringify(JSON.parse(r), null, 2) : r,
-  ).join("\n") + (jsonlRows.length ? "\n" : "");
+  const jsonl =
+    jsonlRows
+      .map((r) => (pretty ? JSON.stringify(JSON.parse(r), null, 2) : r))
+      .join("\n") + (jsonlRows.length ? "\n" : "");
 
-  return { jsonl, headers, rows: jsonlRows.length, delimiter: delim, validation };
+  return {
+    jsonl,
+    headers,
+    rows: jsonlRows.length,
+    delimiter: delim,
+    validation,
+  };
 }
 
 // ---------- CSV -> JSONL (Legacy - list-column format) ----------
@@ -540,7 +573,7 @@ export function csvTextToJsonl(
     schema = null,
     rowMapper = null,
     maxErrors = 200,
-  }
+  },
 ) {
   // Delimiter sniff: sample first sniffBytes
   const sample = text.slice(0, sniffBytes);
@@ -557,7 +590,13 @@ export function csvTextToJsonl(
   if (schema && schema.requireHeaders?.length) {
     const hres = validateHeaders(headers, schema.requireHeaders);
     if (!hres.ok) {
-      return buildFatalResult(delim, headers, "missing_header", "Header missing", hres.missing);
+      return buildFatalResult(
+        delim,
+        headers,
+        "missing_header",
+        "Header missing",
+        hres.missing,
+      );
     }
   }
 
@@ -596,7 +635,7 @@ export function csvTextToJsonl(
         tr,
         i + 2,
         schema,
-        uniqueSets
+        uniqueSets,
       );
       if (errors.length) allErrors.push(...errors);
       if (warnings.length) allWarnings.push(...warnings);

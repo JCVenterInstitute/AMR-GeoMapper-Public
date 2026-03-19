@@ -11,7 +11,11 @@ This guide walks through running AMR GeoMapper on your local machine using the i
 
 ---
 
+## Quickstart Guide
+
 ## Installation
+
+1. Clone the repository and install npm the necessary node packages.
 
 ```bash
 git clone <repository-url>
@@ -19,17 +23,13 @@ cd AMR-Geo-Mapper
 npm install
 ```
 
----
+2. Start the server locally.
 
-## Environment Setup
-
-The project includes a `.env` file in the root directory with the server port:
-
-```
-PORT=3000
+```bash
+node server.js
 ```
 
-You can change the port by editing this file. It defaults to `3000` if not specified.
+3. In a browser navigate to http://localhost:3000
 
 ---
 
@@ -113,6 +113,18 @@ The `<amr-geo-mapper>` web component is configured through two HTML attributes s
 To use a different dataset, create new config and taxonomy files under `public/config/` and update these attributes in `index.html`.
 
 See the [Configuration Reference](configuration.md) for a full description of all config options.
+
+---
+
+## Environment Setup
+
+The project includes a `.env` file in the root directory with the server port:
+
+```
+PORT=3000
+```
+
+You can change the port by editing this file. It defaults to `3000` if not specified.
 
 ---
 
