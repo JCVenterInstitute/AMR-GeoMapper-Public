@@ -400,6 +400,7 @@ self.addEventListener("message", async (e) => {
         dbVersion,
         resultKey,
         speciesOverride,
+        amrWatchConfig,
       } = e.data;
       if (!file) {
         self.postMessage({ type: "error", error: "No file provided." });
@@ -505,13 +506,16 @@ self.addEventListener("message", async (e) => {
             speciesMap = {};
           }
         }
-        const availableDrugCols = Object.keys(AMR_WATCH_HEADERS.drugCols).filter(
+        const configDrugCols = amrWatchConfig?.drugCols ?? null;
+        const drugColSource = configDrugCols || AMR_WATCH_HEADERS.drugCols;
+        const availableDrugCols = Object.keys(drugColSource).filter(
           (col) => headerInfo.headers.includes(col)
         );
         rowMapper = buildAmrWatchRowMapper(
           speciesMap,
           availableDrugCols,
-          override
+          override,
+          amrWatchConfig,
         );
         effectiveSchema = null;
       }

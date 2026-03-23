@@ -33,6 +33,7 @@ class CsvUploadButton extends HTMLElement {
     this._linkedFields = [];
     this._scalarCols = [];
     this._requiredHeaders = ["country", "genus"];
+    this._amrWatchConfig = null;
 
     const btnLabel = this.getAttribute("button-label") ?? "Load Custom Data";
     const accept = this.getAttribute("accept") ?? ".csv,text/csv";
@@ -90,6 +91,9 @@ class CsvUploadButton extends HTMLElement {
     const required = new Set(["country", "genus"]);
     for (const col of this._scalarCols) required.add(col);
     this._requiredHeaders = [...required];
+
+    // AMR.watch column mapping from config
+    this._amrWatchConfig = config.amrWatch ?? null;
   }
 
   connectedCallback() {
@@ -157,6 +161,7 @@ class CsvUploadButton extends HTMLElement {
         dbVersion: this.IDB_VERSION,
         resultKey: resultKey,
         speciesOverride: this._speciesOverride,
+        amrWatchConfig: this._amrWatchConfig,
         options: {
           delimiter: null, // sniff
           sniffBytes: 8192,
