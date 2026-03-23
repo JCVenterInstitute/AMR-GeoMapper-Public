@@ -220,7 +220,14 @@ export function transformRow(
   for (const [k, v] of Object.entries(rowObj)) {
     if (!useAll && !keepHeaders.includes(k)) continue;
     if (listCols.has(k)) continue; // handled via observations
-    out[k] = inferTypes ? inferValue(v) : v;
+    // Preserve the observations array as-is; inferValue would corrupt
+    // empty arrays (String([]) === "" → null) and has no useful effect
+    // on arrays of objects.
+    if (k === "observations") {
+      out[k] = v;
+    } else {
+      out[k] = inferTypes ? inferValue(v) : v;
+    }
   }
 
   // Build observations array from parsed list columns
@@ -407,12 +414,15 @@ export function extractLines(buffer) {
 export function buildAmrWatchRowMapper(
   speciesMap,
   availableDrugCols = null,
-  speciesOverride = null
+  speciesOverride = null,
+  amrWatchConfig = null,
 ) {
-  const drugCols = AMR_WATCH_HEADERS.drugCols;
+  const drugCols = amrWatchConfig?.drugCols ?? AMR_WATCH_HEADERS.drugCols;
+  const drugClassField = amrWatchConfig?.drugClassField ?? "drug_class";
+  const geneField = amrWatchConfig?.geneField ?? "gene";
   const activeDrugCols = Array.isArray(availableDrugCols)
     ? availableDrugCols
-    : Object.keys(AMR_WATCH_HEADERS.drugCols);
+    : Object.keys(drugCols);
   const normalizedOverride =
     typeof speciesOverride === "string" && speciesOverride.trim().length > 0
       ? speciesOverride.trim()
@@ -433,6 +443,7 @@ export function buildAmrWatchRowMapper(
     const observations = [];
     for (const col of activeDrugCols) {
       const label = drugCols[col];
+      if (!label) continue; // skip columns not in the mapping
       const cell = row[col];
       if (!isNullishCell(cell)) {
         const genes = String(cell)
@@ -440,11 +451,10 @@ export function buildAmrWatchRowMapper(
           .map((g) => g.trim())
           .filter(Boolean);
         for (const gene of genes) {
-          observations.push({
-            drug_class: label,
-            gene: gene,
-            gene_short_name: gene,
-          });
+          const obs = {};
+          obs[drugClassField] = label;
+          obs[geneField] = gene;
+          observations.push(obs);
         }
       }
     }

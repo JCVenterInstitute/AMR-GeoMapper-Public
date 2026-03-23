@@ -486,10 +486,6 @@ class AMRGeoMapper extends HTMLElement {
         this.config,
       );
 
-      // Pass config to the CSV upload button so it can derive column lists
-      const uploadBtn = this.shadow.querySelector("csv-upload-button");
-      if (uploadBtn) uploadBtn.setConfig(configData);
-
       const leafletCSSUrl = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
 
       const loadCSS = (url, target) => {
@@ -511,6 +507,11 @@ class AMRGeoMapper extends HTMLElement {
       ]);
 
       await this._taxonomy.loadTaxonomyModal(taxonURL);
+
+      // Pass config to the CSV upload button so it can derive column lists
+      // (must be after loadTaxonomyModal, which renders the <csv-upload-button> element)
+      const uploadBtn = this.shadow.querySelector("csv-upload-button");
+      if (uploadBtn) uploadBtn.setConfig(configData);
       this.setupTooltips({ hoverDelay: this._tooltipHoverDelay });
       if (!this.hasAttribute("no-open-on-load")) this.openModal();
       this.initMap();

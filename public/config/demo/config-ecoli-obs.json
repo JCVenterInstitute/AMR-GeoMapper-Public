@@ -10,6 +10,15 @@
     ],
     "primaryKey": "gene"
   },
+  "amrWatch": {
+    "drugClassField": "antibiotic_resistant",
+    "geneField": "gene",
+    "drugCols": {
+      "3G CEPHALOSPORIN": "cephalosporin",
+      "QUINOLONE": "quinolone",
+      "CARBAPENEM": "carbapenem"
+    }
+  },
   "dataAPI": {
     "url": "http://localhost:3000/data",
     "dataFile": "data/demo/bvbrcEcoli_obs.jsonl"
