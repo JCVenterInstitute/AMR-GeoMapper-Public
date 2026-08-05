@@ -154,6 +154,8 @@
 #amr-geo-mapper-wrapper {
   flex: 1 1 0;
   min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 h1 {
   font-size: 0.8rem;
@@ -166,27 +168,28 @@ h2 {
   margin: 0;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   border: 1px solid #dee2e6;
 }
-input[type="checkbox"]:focus {
+input[type='checkbox']:focus {
   box-shadow: none;
   border-color: #dee2e6;
 }
-input[type="checkbox"]:hover {
+input[type='checkbox']:hover {
   border-color: #96989b;
 }
 
-input[type="search"]:focus {
+input[type='search']:focus {
   outline: none;
   border-color: #9bb4ff;
   box-shadow: var(--search-shadow);
 }
 
 .map-wrap {
-  position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-height: 0;
 }
 .italic {
   font-style: italic;
@@ -510,7 +513,7 @@ section#user-files-section div#user-files {
 }
 /* draw the chevron shape using borders */
 .list-tree summary .tree-chevron::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   border-right: 2px solid currentColor;
@@ -1221,6 +1224,8 @@ input.form-check-input {
 
 #app-surface {
   overflow: hidden;
+  flex: 1 1 0;
+  min-height: 0;
 }
 
 section#header-area {
@@ -1454,17 +1459,17 @@ svg line {
   transform: translateX(-50%);
 }
 
-.mgo-tooltip[data-placement="top"] {
+.mgo-tooltip[data-placement='top'] {
   left: anchor(center);
   top: anchor(top);
   transform: translate(-50%, calc(-100% - 8px));
 }
-.mgo-tooltip[data-placement="left"] {
+.mgo-tooltip[data-placement='left'] {
   left: calc(anchor(left) - 4px);
   top: anchor(center);
   transform: translate(-100%, -50%);
 }
-.mgo-tooltip[data-placement="right"] {
+.mgo-tooltip[data-placement='right'] {
   left: calc(anchor(right) + 4px);
   top: anchor(center);
   transform: translate(0, -50%);
