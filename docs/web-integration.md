@@ -72,7 +72,7 @@ Your server must serve the following files:
 
 | File | Description |
 |---|---|
-| `agm.min.js` | The bundled component script (produced by `./utilities/build`) |
+| `agm.min.js` | The bundled component script (produced by `npm run build`) |
 | `config.json` | Component configuration (see [Configuration Reference](configuration.md)) |
 | Taxonomy JSON | Taxonomy hierarchy file (e.g., `taxon_v7.json`) |
 | SVG icons | Icon files referenced in filter `svgIcon` fields in `config.json` |

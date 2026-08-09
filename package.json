@@ -3,18 +3,19 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "rollup -c"
   },
   "author": "Andrew LaPointe",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
-    "nodemon": "^3.1.10",
-    "rollup": "^4.56.0"
+    "nodemon": "^3.1.10"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.62.4",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-web-worker-loader": "^1.7.0",
     "vitest": "^2.1.9"

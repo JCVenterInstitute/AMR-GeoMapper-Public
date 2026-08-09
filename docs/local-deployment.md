@@ -51,11 +51,15 @@ By default, `public/index.html` is already configured to use the demo config and
 
 ## Build
 
-AMR GeoMapper uses Rollup to bundle all ES modules into a single file. Run the build script from the project root:
+AMR GeoMapper uses Rollup to bundle all ES modules into a single file. Run:
 
 ```bash
-./utilities/build
+npm run build
 ```
+
+The wrapper script `./utilities/build` does the same thing and can be run from any directory.
+
+> **Note:** Rollup and its plugins are development dependencies, so building requires a full `npm install`. If you installed with `npm install --omit=dev`, the build tooling will not be present.
 
 This produces two files:
 

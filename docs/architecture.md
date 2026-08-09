@@ -155,7 +155,7 @@ User toggles filter checkbox
 - `public/dist/agm.js` — unminified ES module
 - `public/dist/agm.min.js` — minified ES module
 
-**Build command:** `./utilities/build` (runs `rollup -c`)
+**Build command:** `npm run build` (runs `rollup -c`). The `./utilities/build` wrapper script invokes the same npm script.
 
 ---
 
