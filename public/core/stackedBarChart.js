@@ -364,7 +364,7 @@ export class StackedBarChart extends BaseChart {
 
         const fontFamily =
           chart.options.font?.family || chart.defaults?.font?.family || "sans-serif";
-        ctx.font = opts?.font || `500 14px ${fontFamily}`;
+        ctx.font = opts?.font || `500 16px ${fontFamily}`;
         ctx.fillStyle = opts?.color || "#000";
         ctx.textAlign = "left";
         ctx.textBaseline = "bottom";
