@@ -1,6 +1,6 @@
 # User Data CSV — File Format Guide
 
-> **Version:** v2.0 | **Format:** CSV (comma-separated) | **Encoding:** UTF-8
+> **Version:** v2.1 | **Format:** CSV (comma-separated) | **Encoding:** UTF-8
 
 This guide explains how to prepare a CSV file for use with AMR GeoMapper. The primary public deployment is at [camra.acegid.org/amr-geomapper](https://camra.acegid.org/amr-geomapper), but these instructions apply to any AMR-GM instance.
 
@@ -41,6 +41,7 @@ This guide explains how to prepare a CSV file for use with AMR GeoMapper. The pr
 | `genus`                | string            |  **Yes** | NCBI/accepted genus                                          | `Klebsiella`                     |
 | `species`              | string            |  **Yes** | Species name. This will be the display name for the species. | `K. pneumoniae` or `pneumoniae`  |
 | `country`              | string            |  **Yes** | Country or equivalent                                        | `Nigeria`                        |
+| `state_province`       | string            |       No | US state name, spelled out in full (see [State-level data](#state-level-data)) | `California`                     |
 | `family`               | string            |       No | Taxonomic family                                             | `Enterobacteriaceae`             |
 | `collection_date`      | date (YYYY-MM-DD) |       No | Full collection date (year is extracted automatically)       | `2017-06-12`                     |
 | `gene`                 | string            |       No | AMR gene / marker                                            | `(Bla)ampH`                      |
@@ -52,11 +53,20 @@ This guide explains how to prepare a CSV file for use with AMR GeoMapper. The pr
 
 > **Note:** Extra columns are allowed but ignored.
 
+### State-level data
+
+The optional `state_province` column adds a separate map pin for each US state. Samples with a state value are counted in both the state pin and the pin for their country.
+
+- Set `country` to `United States` and `state_province` to the full state name (e.g., `California`, not `CA`). Capitalization does not matter.
+- Only US states, the District of Columbia, and Puerto Rico are supported. Values for other countries will not produce a pin.
+- State pins appear once the map is zoomed in past the world view.
+- Leave `state_province` blank for samples with only country-level location data.
+
 ---
 
 ## 4. How Rows Are Grouped
 
-Each CSV row represents a **single observation** (one gene, one drug class, etc.) for a sample. Rows that share the same `id` are grouped together during import. Sample-level fields (`genus`, `species`, `country`, `collection_date`, `family`) are taken from the first row for each `id`. Observation-level fields (`gene`, `drug_class`, `evidence`, `resistance_mechanism`, `gene_short_name`, `gene_family_name`) are collected across all rows for that `id` into an observations list.
+Each CSV row represents a **single observation** (one gene, one drug class, etc.) for a sample. Rows that share the same `id` are grouped together during import. Sample-level fields (`genus`, `species`, `country`, `state_province`, `collection_date`, `family`) are taken from the first row for each `id`. Observation-level fields (`gene`, `drug_class`, `evidence`, `resistance_mechanism`, `gene_short_name`, `gene_family_name`) are collected across all rows for that `id` into an observations list.
 
 For example, these two CSV rows:
 
@@ -109,6 +119,10 @@ sample2,Escherichia,E. coli,Kenya,2019-03-10,blaTEM-1,penicillin beta-lactam,CAR
   _Cause:_ Incorrect location name.
   _Fix:_ Ensure the name used in the `country` column matches a recognized country name (e.g., use "United States" instead of "USA", "Vietnam" instead of "Viet Nam").
 
+- **State pin not shown on map**
+  _Cause:_ Abbreviated or non-US `state_province` value, or the map is zoomed out.
+  _Fix:_ Use the full US state name (e.g., "Texas" instead of "TX") and zoom in on the United States.
+
 - **Only one observation per sample**
   _Cause:_ Each sample has only one row.
   _Fix:_ Add additional rows with the same `id` for each observation.
@@ -142,6 +156,7 @@ Your data is never sent to a server. It is analyzed locally in your browser for 
 
 ## 11. Changelog
 
+- **v2.1** – Documented the optional `state_province` column for US state-level map pins.
 - **v2.0** – Switched to per-observation row format (one row per gene/drug_class entry). Added required `id` column for sample grouping. Column names are now config-driven.
 - **v1.0** – Initial documentation
 

@@ -346,7 +346,7 @@ class HTMLhelper {
           "download",
         )}</a>
 
-        <a id="github-button" class="header-btn" href="https://github.com/JCVenterInstitute/AMR-GeoMapper" data-tooltip="Project GitHub">
+        <a id="github-button" class="header-btn" href="https://github.com/JCVenterInstitute/AMR-GeoMapper-Public" data-tooltip="Project GitHub">
           ${HTMLhelper.icons("github")}
         </a>
         <button id="information-button" class="header-btn" data-placement="left" data-tooltip="Software information">${HTMLhelper.icons(
